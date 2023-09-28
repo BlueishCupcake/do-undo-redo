@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-
-import { createRoot } from "react-dom/client";
-import { Stage, Layer, Rect, Text } from "react-konva";
+import { Stage, Layer, Rect } from "react-konva";
+import { useSelector, useDispatch } from "react-redux";
+import { increment, decrement } from "./store/konvaSlice";
 
 let history = [
   {
@@ -10,29 +10,36 @@ let history = [
     y: 20,
   },
 ];
-let historyStep = 0;
 
 function App() {
+  const historyStep = useSelector((state) => state.konva.value);
+  const dispatch = useDispatch();
   const [position, setPosition] = useState({
     position: history[0],
   });
 
+  useEffect(() => {
+    // Initialize position state with the initial history value after Redux state has been updated
+    setPosition({
+      position: history[historyStep],
+    });
+  }, [historyStep]);
+
   const handleUndo = () => {
     if (historyStep === 0) return;
-
-    historyStep -= 1;
 
     const previous = history[historyStep];
 
     setPosition({
       position: previous,
     });
+    dispatch(decrement());
   };
 
   const handleRedo = () => {
     if (historyStep === history.length - 1) return;
 
-    historyStep += 1;
+    dispatch(increment());
 
     const next = history[historyStep];
 
@@ -49,9 +56,14 @@ function App() {
       y: e.target.y(),
     };
 
-    history = history.concat([pos]);
+    // Increment the history step before updating the history array
+    dispatch(increment());
 
-    historyStep += 1;
+    // Create a new copy of the history array and add the new position
+    const newHistory = [...history.slice(0, historyStep + 1), pos];
+
+    // Update the state with the new history array
+    history = newHistory;
 
     setPosition({
       position: pos,
@@ -59,30 +71,28 @@ function App() {
   };
 
   return (
-    <>
-      <div className="card">
-        <div className="stage-div">
-          <Stage width={1000} height={300}>
-            <Layer>
-              <Rect
-                x={position.position.x}
-                y={position.position.y}
-                width={50}
-                height={50}
-                fill="black"
-                draggable
-                onDragEnd={handleDragEnd}
-              />
-            </Layer>
-          </Stage>
-        </div>
-        <span>Steps: {historyStep}</span>
-        <div className="buttons">
-          <button onClick={handleUndo}>Undo</button>
-          <button onClick={handleRedo}>Redo</button>
-        </div>
+    <div className="card">
+      <div className="stage-div">
+        <Stage width={1000} height={300}>
+          <Layer>
+            <Rect
+              x={position.position.x}
+              y={position.position.y}
+              width={50}
+              height={50}
+              fill="black"
+              draggable
+              onDragEnd={handleDragEnd}
+            />
+          </Layer>
+        </Stage>
       </div>
-    </>
+      <span>Steps: {historyStep}</span>
+      <div className="buttons">
+        <button onClick={handleUndo}>Undo</button>
+        <button onClick={handleRedo}>Redo</button>
+      </div>
+    </div>
   );
 }
 

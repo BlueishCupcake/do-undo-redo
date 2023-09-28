@@ -1,0 +1,62 @@
+1 - estado atual da correção;
+
+text - posicao inicio - posicao fim
+img - posicao X - posicao Y - metadado
+audio - tempo inicio - tempo fim
+
+{
+    "marcacoes": [
+        {
+            "id": "",
+            "mode": "",
+            "points": "",
+            "position": "",
+            "criterio_id": ["1B"],
+            "created_at": "",
+            "updated_at": "",
+            "observacao": "",
+        },
+    ],
+    "criterios": [
+        {
+            "id": "1B",
+            "nota": "",
+            "observacao": "",
+        },
+    ],
+    "comentario_final": {
+        "type": "texto|media",
+        "content": "url|text",
+    },
+}
+
+2 - marcação criação/remoção/atualização
+
+[
+    { tipo: criacao, timestamp, payload: ... }
+    { tipo: atualizacao, timestamp, payload: ... }
+    { tipo: remocao, timestamp, payload: ..., comentario, criterio }
+]
+
+Segregar ou agrupar ?
+
+Comentarios - Adicionar/Remover/Atualizar
+Criterios - Vincular e desvincular
+
+3 - criterios - Atualização de comentario e nota
+PUT - redacao/1/correcao/1/criterio/1B
+
+{
+    "nota": 1,
+    "comentario": "bla bla",
+}
+
+4 - adicionar comentario final
+Em caso de ser uma media, devemos antes realizar o fluxo de upload para blob storage e enviar apenas o hash do arquivo.
+redacao/1/correcao/1/generate_sas_url
+redacao/1/correcao/1/resultado
+
+{
+    "tipo": "",
+    "conteudo": ""
+}
