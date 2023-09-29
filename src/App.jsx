@@ -3,8 +3,7 @@ import "./App.css";
 import { Stage, Layer } from "react-konva";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, addMarker } from "./store/konvaSlice";
-import { SideBar } from "./components/SideBar";
-import { Circles } from "./components/Circles";
+import { Squares, Circles, SideBar } from "./components";
 
 function App() {
   const useKonvaStore = useSelector((state) => state.konva);
@@ -15,14 +14,25 @@ function App() {
     const stage = stageRef.current;
     const pointerPosition = stage.getPointerPosition();
 
-    if (pointerPosition && useKonvaStore.markerType.payload === "circle") {
-      const newCircle = {
+    if (pointerPosition && useKonvaStore.markerType === "circle") {
+      const newMarker = {
         x: pointerPosition.x,
         y: pointerPosition.y,
         fill: "red",
       };
 
-      dispatch(addMarker(newCircle));
+      dispatch(addMarker({ markerType: "circle", marker: newMarker }));
+      dispatch(increment());
+    }
+
+    if (pointerPosition && useKonvaStore.markerType === "square") {
+      const newMarker = {
+        x: pointerPosition.x,
+        y: pointerPosition.y,
+        fill: "blue",
+      };
+
+      dispatch(addMarker({ markerType: "square", marker: newMarker }));
       dispatch(increment());
     }
   };
@@ -40,6 +50,7 @@ function App() {
             onClick={handleStageClick}
           >
             <Layer>
+              <Squares />
               <Circles />
             </Layer>
           </Stage>

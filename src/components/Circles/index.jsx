@@ -10,11 +10,11 @@ export const Circles = () => {
     <>
       {circleList.map((eachCircle, index) => (
         <Circle
-          x={eachCircle.payload.x}
-          y={eachCircle.payload.y}
+          x={eachCircle.x}
+          y={eachCircle.y}
           key={index}
           radius={25}
-          fill={eachCircle.payload.fill}
+          fill={eachCircle.fill}
           draggable
         />
       ))}

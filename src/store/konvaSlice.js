@@ -19,11 +19,22 @@ export const konvaSlice = createSlice({
     decrement: (state) => {
       state.value -= 1;
     },
-    changeMarker: (state, marker) => {
-      state.markerType = marker;
+    changeMarker: (state, action) => {
+      state.markerType = action.payload;
     },
-    addMarker: (state, marker) => {
-      state.markers.circle = [...state.markers.circle, marker];
+    addMarker: (state, action) => {
+      const { markerType, marker } = action.payload;
+
+      switch (markerType) {
+        case "circle":
+          state.markers.circle = [...state.markers.circle, marker];
+          break;
+        case "square":
+          state.markers.square = [...state.markers.square, marker];
+          break;
+        default:
+          break;
+      }
     },
   },
 });
