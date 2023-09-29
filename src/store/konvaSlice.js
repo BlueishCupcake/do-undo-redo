@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   value: 0,
   markerType: "",
+  markerColor: "#000",
   markers: {
     circle: [],
     square: [],
@@ -22,6 +23,9 @@ export const konvaSlice = createSlice({
     changeMarker: (state, action) => {
       state.markerType = action.payload;
     },
+    changeMarkerColor: (state, action) => {
+      state.markerColor = action.payload;
+    },
     addMarker: (state, action) => {
       const { markerType, marker } = action.payload;
 
@@ -40,7 +44,12 @@ export const konvaSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, changeMarker, addMarker } =
-  konvaSlice.actions;
+export const {
+  increment,
+  decrement,
+  changeMarker,
+  changeMarkerColor,
+  addMarker,
+} = konvaSlice.actions;
 
 export default konvaSlice.reducer;

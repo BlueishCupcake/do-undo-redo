@@ -14,27 +14,18 @@ function App() {
     const stage = stageRef.current;
     const pointerPosition = stage.getPointerPosition();
 
-    if (pointerPosition && useKonvaStore.markerType === "circle") {
-      const newMarker = {
-        x: pointerPosition.x,
-        y: pointerPosition.y,
-        fill: "red",
-      };
+    if (!pointerPosition || useKonvaStore.markerType === "") return;
 
-      dispatch(addMarker({ markerType: "circle", marker: newMarker }));
-      dispatch(increment());
-    }
+    const newMarker = {
+      x: pointerPosition.x,
+      y: pointerPosition.y,
+      fill: useKonvaStore.markerColor,
+    };
 
-    if (pointerPosition && useKonvaStore.markerType === "square") {
-      const newMarker = {
-        x: pointerPosition.x,
-        y: pointerPosition.y,
-        fill: "blue",
-      };
-
-      dispatch(addMarker({ markerType: "square", marker: newMarker }));
-      dispatch(increment());
-    }
+    dispatch(
+      addMarker({ markerType: useKonvaStore.markerType, marker: newMarker })
+    );
+    dispatch(increment());
   };
 
   return (
