@@ -10,11 +10,13 @@ function App() {
   const dispatch = useDispatch();
   const stageRef = useRef(null);
 
-  const handleStageClick = () => {
+  const handleStageClick = (e) => {
     const stage = stageRef.current;
     const pointerPosition = stage.getPointerPosition();
 
     if (!pointerPosition || useKonvaStore.markerType === "") return;
+
+    if (e.target.getAttr("draggable")) return;
 
     const newMarker = {
       x: pointerPosition.x,
@@ -26,6 +28,7 @@ function App() {
       addMarker({ markerType: useKonvaStore.markerType, marker: newMarker })
     );
     dispatch(increment());
+    e.evt.stopPropagation();
   };
 
   return (

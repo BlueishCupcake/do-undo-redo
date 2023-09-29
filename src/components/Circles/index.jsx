@@ -1,5 +1,5 @@
-import { Circle } from "react-konva";
 import { useSelector } from "react-redux";
+import { ResizableCircle } from "./ResizableCircle";
 
 export const Circles = () => {
   const useKonvaStore = useSelector((state) => state.konva);
@@ -9,13 +9,13 @@ export const Circles = () => {
   return (
     <>
       {circleList.map((eachCircle, index) => (
-        <Circle
+        <ResizableCircle
           x={eachCircle.x}
           y={eachCircle.y}
-          key={index}
-          radius={25}
           fill={eachCircle.fill}
-          draggable
+          index={index}
+          key={index}
+          off
         />
       ))}
     </>
