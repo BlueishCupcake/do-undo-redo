@@ -2,11 +2,9 @@ import { useSelector } from "react-redux";
 import { ResizableSquares } from "./ResizableSquares";
 
 export const Squares = () => {
-  const useKonvaStore = useSelector((state) => state.konva);
+  const useKonvaStore = useSelector((state) => state.konva.present);
 
   const squareList = useKonvaStore.markers.square;
-
-  console.log(squareList);
 
   return (
     <>
@@ -16,7 +14,6 @@ export const Squares = () => {
           y={eachSquare.y}
           key={index}
           fill={eachSquare.fill}
-          off
         />
       ))}
     </>

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import undoable from "redux-undo";
 
 const initialState = {
-  value: 0,
   markerType: "",
   markerColor: "#000000",
   markerIsSelected: false,
@@ -15,12 +15,6 @@ export const konvaSlice = createSlice({
   name: "konva",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
     changeMarker: (state, action) => {
       state.markerType = action.payload;
     },
@@ -65,8 +59,6 @@ export const konvaSlice = createSlice({
 });
 
 export const {
-  increment,
-  decrement,
   changeMarker,
   changeMarkerColor,
   addMarker,
@@ -75,4 +67,5 @@ export const {
   deselectMarker,
 } = konvaSlice.actions;
 
-export default konvaSlice.reducer;
+const undoableKonvaReducer = undoable(konvaSlice.reducer);
+export default undoableKonvaReducer;

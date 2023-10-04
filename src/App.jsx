@@ -2,11 +2,12 @@ import { useRef } from "react";
 import "./App.css";
 import { Stage, Layer } from "react-konva";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, addMarker } from "./store/konvaSlice";
+import { addMarker } from "./store/konvaSlice";
 import { Squares, Circles, SideBar } from "./components";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const useKonvaStore = useSelector((state) => state.konva);
+  const useKonvaStore = useSelector((state) => state.konva.present);
   const dispatch = useDispatch();
   const stageRef = useRef(null);
 
@@ -19,21 +20,21 @@ function App() {
     if (e.target.getAttr("draggable")) return;
 
     const newMarker = {
+      id: uuidv4(),
       x: pointerPosition.x,
       y: pointerPosition.y,
       fill: useKonvaStore.markerColor,
+      scaleX: 1,
     };
 
     dispatch(
       addMarker({ markerType: useKonvaStore.markerType, marker: newMarker })
     );
-    dispatch(increment());
     e.evt.stopPropagation();
   };
 
   return (
     <>
-      <span>Steps: {useKonvaStore.value}</span>
       <div className="card">
         <SideBar />
         <div className="stage-div">
