@@ -59,6 +59,7 @@ export const ResizableSquares = ({ x, y, fill, index }) => {
         height={50}
         ref={squareRef}
         onTransformEnd={handleTransformEnd}
+        onDragEnd={handleTransformEnd}
         onClick={isSelected ? handleDeselect : handleSelect}
         onTap={isSelected ? handleDeselect : handleSelect}
       />

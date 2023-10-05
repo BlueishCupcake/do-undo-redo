@@ -40,10 +40,10 @@ export const konvaSlice = createSlice({
 
       switch (markerType) {
         case "circle":
-          state.markers.circle[index] = marker;
+          state.markers.circle.splice(index, 1, marker);
           break;
         case "square":
-          state.markers.square[index] = marker;
+          state.markers.square.splice(index, 1, marker);
           break;
         default:
           break;

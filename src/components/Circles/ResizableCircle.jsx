@@ -60,6 +60,7 @@ export const ResizableCircle = ({ x, y, fill, index }) => {
         draggable
         ref={circleRef}
         onTransformEnd={handleTransformEnd}
+        onDragEnd={handleTransformEnd}
         onClick={isSelected ? handleDeselect : handleSelect}
         onTap={isSelected ? handleDeselect : handleSelect}
       />

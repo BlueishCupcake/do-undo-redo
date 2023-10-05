@@ -3,7 +3,7 @@ import { changeMarker, changeMarkerColor } from "../../store/konvaSlice";
 import { ActionCreators as UndoActionCreators } from "redux-undo";
 
 export const SideBar = () => {
-  const useKonvaStore = useSelector((state) => state.konva);
+  const useKonvaStore = useSelector((state) => state.konva.present);
   const dispatch = useDispatch();
 
   const handleChangeMaker = (marker) => {
