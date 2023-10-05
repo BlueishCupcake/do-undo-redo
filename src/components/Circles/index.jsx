@@ -8,13 +8,13 @@ export const Circles = () => {
 
   return (
     <>
-      {circleList.map((eachCircle, index) => (
+      {circleList.map((eachCircle) => (
         <ResizableCircle
           x={eachCircle.x}
           y={eachCircle.y}
           fill={eachCircle.fill}
-          index={index}
-          key={index}
+          index={eachCircle.id}
+          key={eachCircle.id}
           off
         />
       ))}

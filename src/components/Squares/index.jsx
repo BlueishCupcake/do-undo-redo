@@ -8,12 +8,14 @@ export const Squares = () => {
 
   return (
     <>
-      {squareList.map((eachSquare, index) => (
+      {squareList.map((eachSquare) => (
         <ResizableSquares
           x={eachSquare.x}
           y={eachSquare.y}
-          key={index}
+          key={eachSquare.id}
+          index={eachSquare.id}
           fill={eachSquare.fill}
+          off
         />
       ))}
     </>

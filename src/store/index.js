@@ -10,16 +10,19 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, konvaSlice);
 
-export const store = configureStore({
-  reducer: {
-    konva: persistedReducer,
+export const store = configureStore(
+  {
+    reducer: {
+      konva: persistedReducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: ["persist/PERSIST"],
+        },
+      }),
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ["persist/PERSIST"],
-      },
-    }),
-});
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 export const persistor = persistStore(store);
